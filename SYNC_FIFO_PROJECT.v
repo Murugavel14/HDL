@@ -2,7 +2,7 @@
 
 module sync_fifo_1 #(
     parameter  fifo_depth_1 = 8,
-    parameter  data_width_1  = 4;
+    parameter  data_width_1  = 4
 ) (
     input clk,
     input rst_n,
@@ -54,7 +54,7 @@ endmodule
 
  module sync_fifo_2 #(
     parameter  fifo_depth_2 = 8,
-    parameter  data_width_2  = 4;
+    parameter  data_width_2  = 4
 ) (
     input clk,
     input rst_n,
@@ -111,7 +111,7 @@ module average_out(
         wire [data_width_1 + 1:0] sum;
     always@(data_out_1, data_in_2) begin 
         if (empty_1 & empty_2) begin
-            sum = (data_out_1 + data_in_2) 
+            sum = (data_out_1 + data_in_2);
             avg = sum >> 2; //it's a averaging 2 input value (>> is this specificaly using for divide by 2)
         end else begin
             avg = '0; //MEANS ALL BITS GETING ZERO(0000)
@@ -124,7 +124,7 @@ endmodule
 
  module sync_fifo_3 #(
     parameter  fifo_depth_3 = 8,
-    parameter  data_width_3  = 4;
+    parameter  data_width_3  = 4
 ) (
     input clk,
     input rst_n,
