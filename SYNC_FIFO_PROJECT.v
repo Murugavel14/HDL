@@ -106,7 +106,7 @@ endmodule
 module average_out(
     input  [data_width_1 - 1:0] data_out_1,
     input  [data_width_2 - 1:0] data_out_2,
-    output [data_width_1 - 1:0] avg; 
+    output [data_width_1 - 1:0] avg
 );
         wire [data_width_1 + 1:0] sum;
     always@(data_out_1, data_in_2) begin 
