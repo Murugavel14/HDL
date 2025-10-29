@@ -1,4 +1,4 @@
-module cpf (
+module code_2 (
     input  [7:0] in,
     output reg [2:0] high_out,
     output reg [1:0] low_out
