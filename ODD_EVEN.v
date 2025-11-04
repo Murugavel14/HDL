@@ -7,7 +7,7 @@ module odd_even (
     output reg even_chan
 );
     reg [1:0] count;  
-    output reg [3:0] out;    
+    reg [3:0] out;    
 
     always @(posedge clk or negedge rst_n) begin
         if (rst_n) begin
@@ -20,9 +20,9 @@ module odd_even (
             if (count == 2'd3) begin
                 count <= 0;
                 if (out[0] == 1'b1) begin
-                    odd_chan <= 1'b1; 
+                    odd_chan <= data_in; 
                 end else if (out[0] == 1'b0) begin
-                    even_chan <= 1'b0;
+                    even_chan <= data_in;
                 end
                 else begin
                     odd_chan <= 1'b0;
