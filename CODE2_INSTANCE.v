@@ -31,7 +31,8 @@ module final_extent (
     temp = in;
     final fin(.in(in), .out(f_out));    //INSTANCE_1(FIRST_OUT)
     final fin1(.in(temp), .out(s_out)); //INSTANCE_2(SEC_OUT)
-    case (out);
+    always@(*) begin
+     case (out);
       3'd0 : temp[0] = 1'b0;
       3'd1 : temp[1] = 1'b0;
       3'd2 : temp[2] = 1'b0;
@@ -43,7 +44,7 @@ module final_extent (
       3'd7 : temp[7] = 1'b0;
       default : out = 3'dx;
     endcase
- 
+    end
 
 endmodule
 
