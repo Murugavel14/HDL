@@ -1,6 +1,6 @@
  module sync_fifo#(
     parameter  fifo_depth = 8,
-    parameter  data_width  = 4;
+    parameter  data_width  = 4
 ) (
     input clk,
     input rst_n,
