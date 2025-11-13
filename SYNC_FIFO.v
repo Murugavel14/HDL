@@ -12,10 +12,10 @@
     output empty
 );
     //FIFO DESIGN
-    localparam fifo_depth_log = $clog2(fifo_depth);
-    reg [data_width - 1:0] fifo [0: fifo_depth_log - 1];
-    reg [data_width - 1:0] wrptr;
-    reg [data_width - 1:0] rdptr;
+    localparam data_width_log = $clog2(fifo_depth);
+    reg [data_width_log - 1:0] fifo [0: fifo_depth - 1];
+    reg [data_width_log - 1:0] wrptr;
+    reg [data_width_log - 1:0] rdptr;
 
     //WRITE OPERATION
     always @(posedge clk or negedge rst_n) begin
