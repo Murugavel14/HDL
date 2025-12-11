@@ -18,7 +18,7 @@ module baud_rate #(
 
     // BAUD RATE GENERATION FOR TX
     always @(posedge clk) begin
-        if (tx_count == tx_max) begin         //IF CONDITION SATISFY TRANSMITTER COUNTER GO TO "0"
+        if (tx_count == tx_max - 1) begin         //IF CONDITION SATISFY TRANSMITTER COUNTER GO TO "0"
             tx_count <= 0;
         end else begin
             tx_count <= tx_count + 1;
@@ -27,7 +27,7 @@ module baud_rate #(
 
     // BAUD RATE GENERATION FOR RX
     always @(posedge clk) begin
-        if (rx_count == rx_max) begin         //SAME CONDITION FOR RECEIVER
+        if (rx_count == rx_max - 1) begin         //SAME CONDITION FOR RECEIVER
             rx_count <= 0;
         end else begin
             rx_count <= rx_count + 1;
