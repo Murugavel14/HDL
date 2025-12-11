@@ -7,6 +7,7 @@ module baud_rate #(
     parameter rx_wid = $clog2(rx_max);        //find rx_max width
 );
 
+    // PORTS DECLARATION
 (
     input s_clk,                              //SYSTEM CLK
     output tx_en,                             //TRANSMIETR ENABLE
@@ -15,6 +16,7 @@ module baud_rate #(
     reg [tx_wid - 1 : 0] tx_count = 0;        //TRANSMITTER COUNTER
     reg [rx_wid - 1 : 0] rx_count = 0;        //RECEIVER COUNTER
 
+    // BAUD RATE GENERATION FOR TX
     always @(posedge clk) begin
         if (tx_count == tx_max) begin         //IF CONDITION SATISFY TRANSMITTER COUNTER GO TO "0"
             tx_count <= 0;
@@ -23,6 +25,7 @@ module baud_rate #(
         end
     end
 
+    // BAUD RATE GENERATION FOR RX
     always @(posedge clk) begin
         if (rx_count == rx_max) begin         //SAME CONDITION FOR RECEIVER
             rx_count <= 0;
