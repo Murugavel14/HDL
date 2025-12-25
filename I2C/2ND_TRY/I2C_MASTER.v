@@ -67,7 +67,7 @@ module i2c
                     end
                 end
                 addr_fsm: begin
-                    if (!rd_wr_en & addr_count != 0) // begin | (start_bit & stop_bit)) begin
+                    if (!rd_wr_en & addr_count != 0) begin //| (start_bit & stop_bit)) begin
                         addr_count <= addr_count - 1;
                         sda_out <= addr_temp[addr_count]; //PARALLEL TO SERIAL TRANSFORMAION FOR ADDRESS
                     end
@@ -77,6 +77,7 @@ module i2c
                             state <= addr_ack;
                         end
                     end
+                end
                 addr_ack: begin
                     if (sda) begin              //REQUIRED SLAVE ACK ADDRESS
                         state <= start_bit;              
