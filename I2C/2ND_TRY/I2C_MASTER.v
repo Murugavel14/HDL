@@ -38,17 +38,19 @@ module i2c
     
    
     always @(posedge clk) begin
-        if (start_bit & count == 3'd3) begin
-            i_scl <= ~i_scl;
+        if (start_bit & ~(stop_bit) & !error) begin
+            i_scl <=  clk;
+        end
+        else if (~(start_bit) & stop_bit & !error) begin
+            i_scl <=  1'b1;
         end
         else begin
-            count <= count + 1
+            i_scl <=  1'b1;
         end
-    end
-   
+   end
 // --------------------- | MASTER TO SLAVE | ----------------------------------
 
-    always @(posedge clk or negedge rst_n) begin
+    always @(posedge i_scl or negedge rst_n) begin
         if (!rst_n) begin
             sda_en <= 1'b0;
         end
@@ -65,7 +67,7 @@ module i2c
                     end
                 end
                 start: begin                //FRAME START CONDITION
-                    if (start_bit & ~s(top_bit)) begin  
+                    if (start_bit & ~(stop_bit)) begin  
                         sda_en    <= 1'b1;
                         sda_out   <= 1'b0;
                         addr_temp <= {addr,rd_wr_en};
@@ -138,7 +140,7 @@ module i2c
     
 // ---------------------- | SLAVE TO MASTER | ---------------------------------
 
-    always @(negedge clk or posedge rst_n) begin
+    always @(negedge i_scl or posedge rst_n) begin
         if (!rst_n) begin
             sda_en <= 1'b0;
         end
