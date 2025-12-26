@@ -1,8 +1,8 @@
-    ______     _______     _____________     __________     __________     __________     ______
-  ->|IDLE| --> |START| --> |ADDRESS_FSM| --> |ADDR_ACK| --> |DATA_FSM| --> |DATA_ACK| --> |STOP| --v
-  | ------     -------     -------------     ----------     ----------     ----------     ------   |
-  |                                                                                                |
-  ----------------------------------------------------------------------------------------------- <-
+    ______     _______     _____________     ______________     __________     ______________     ______
+  ->|IDLE| --> |START| --> |ADDRESS_FSM| --> |ADDR_ACK_FSM| --> |DATA_FSM| --> |DATA_ACK_FSM| --> |STOP| --v
+  | ------     -------     -------------     --------------     ----------     --------------     ------   |
+  |                                                                                                        |
+  --------------------------------------------------------------------------------------------------------<-
 module i2c 
 (
     input  clk,
@@ -12,7 +12,7 @@ module i2c
     input  [7:0]data,   //INPUT DATA
     input  rd_wr_en,    //READ AND WRITE ENABLE
     input  stop_bit,
-    output error,       //ERROR SIGNAL
+    output reg error,       //ERROR SIGNAL
     output reg scl,     //SERIAL CLK
     inout  sda          //SERIAL DATA
 );
@@ -132,6 +132,10 @@ module i2c
             endcase
         end
     end
+
+    // ------------------ | END | -------------------------------------
+    
+    
 // ---------------------- | SLAVE TO MASTER | ---------------------------------
 
     always @(negedge clk or posedge rst_n) begin
@@ -209,7 +213,22 @@ module i2c
         end
     end
 
+    // ------------------ | END | -------------------------------------
+
     assign sda = (sda_en)? sda_out : 1'bz;   //SDA FOR IN CONTINOUS ASSIGNMENT
+
+    // ---------------------- | ERROR SIGNAL | ---------------------------------
+    always @(*) begin
+        if (start_bit) begin
+            if ((state == addr_fsm) |(state == addr_ack_fsm) | (state == data_fsm) | (state == data_ack_fsm)) begin
+                error = 1b1;
+            end
+        end
+        else begin
+            error = 1'b0;
+        end
+    end
+
 endmodule
 
 //Design By MURUGAVEL
