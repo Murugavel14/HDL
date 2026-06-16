@@ -11,7 +11,7 @@ module pulse_syncz (
             ff_a <= 1'b0;
         end
         else begin
-            ff_a <= signal_a;
+            ff_a <= signal_a ? ~ff_a : ff_a;
         end
     end
 
@@ -29,8 +29,8 @@ module pulse_syncz (
         end
     end
 
-    assign out = (~d_out)&(d_meta);     //ACTUAL OUTPUT OF THE SYNCHRONIZER
-    
+    //assign out = (~d_out)&(d_meta);     //ACTUAL OUTPUT OF THE SYNCHRONIZER
+    assign out = (d_out ^ d_meta); //OUTPUT SECTION UPDATED
 endmodule
 
 
